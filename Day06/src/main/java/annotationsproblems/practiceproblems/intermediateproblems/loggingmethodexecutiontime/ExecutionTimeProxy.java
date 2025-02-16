@@ -1,0 +1,24 @@
+package annotationsproblems.practiceproblems.intermediateproblems.loggingmethodexecutiontime;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
+class ExecutionTimeProxy implements InvocationHandler {
+    private final Object target;
+
+    public ExecutionTimeProxy(Object target) {
+        this.target = target;
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        if (method.isAnnotationPresent(LogExecutionTime.class)) {
+            long startTime = System.nanoTime();
+            Object result = method.invoke(target, args);
+            long endTime = System.nanoTime();
+            System.out.println(method.getName() + " executed in " + (endTime - startTime) / 1_000_000.0 + " ms");
+            return result;
+        }
+        return method.invoke(target, args);
+    }
+}
