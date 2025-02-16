@@ -1,0 +1,12 @@
+package annotationsproblems.practiceproblems.beginnerproblems.markimportantmethods;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+@interface ImportantMethod {
+    String level() default "HIGH";
+}
